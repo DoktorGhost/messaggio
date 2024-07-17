@@ -1,0 +1,89 @@
+2024-07-17T15:23:49.565+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T15:23:49.747+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: invalid configuration (Producer.Return.Successes must be true to be used in a SyncProducer)"}
+2024-07-17T15:27:25.306+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T15:27:25.375+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: invalid configuration (Producer.Return.Successes must be true to be used in a SyncProducer)"}
+2024-07-17T15:42:54.109+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T15:42:54.231+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: invalid configuration (Producer.Return.Successes must be true to be used in a SyncProducer)"}
+2024-07-17T15:44:39.290+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T15:44:40.129+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: client has run out of available brokers to talk to: dial tcp: address [\"localhost:9092\"]: missing port in address"}
+2024-07-17T15:44:59.296+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T15:45:00.144+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: client has run out of available brokers to talk to: dial tcp: address [\"kafka:9092\"]: missing port in address"}
+2024-07-17T15:46:17.729+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T15:46:27.723+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: client has run out of available brokers to talk to: dial tcp: lookup kafka: no such host"}
+2024-07-17T15:48:53.377+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T15:48:54.225+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: client has run out of available brokers to talk to: dial tcp [::1]:9092: connectex: No connection could be made because the target machine actively refused it."}
+2024-07-17T15:50:15.484+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T15:50:25.494+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: client has run out of available brokers to talk to: dial tcp: lookup kafka: no such host"}
+2024-07-17T15:52:43.290+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T15:52:53.310+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: client has run out of available brokers to talk to: dial tcp: lookup kafka: no such host"}
+2024-07-17T16:02:27.129+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:02:37.140+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: client has run out of available brokers to talk to: dial tcp: lookup kafka: no such host"}
+2024-07-17T16:03:00.735+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:03:01.621+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: client has run out of available brokers to talk to: dial tcp: address [\"kafka:9092\"]: missing port in address"}
+2024-07-17T16:03:59.888+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:04:00.739+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: client has run out of available brokers to talk to: dial tcp: address [\"localhost:9092\"]: missing port in address"}
+2024-07-17T16:04:27.700+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:04:27.789+0300	FATAL	server/server.go:52	Ошибка при инициализации брокера Kafka	{"error": "kafka: invalid configuration (You must provide at least one broker address)"}
+2024-07-17T16:05:46.967+0300	INFO	server/server.go:37	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:05:47.120+0300	INFO	server/server.go:58	Успешное подключение к БД
+2024-07-17T16:05:47.120+0300	INFO	server/server.go:59	Успешная инициализация брокера Kafka
+2024-07-17T16:11:41.830+0300	INFO	server/server.go:38	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:11:41.931+0300	INFO	server/server.go:59	Успешное подключение к БД
+2024-07-17T16:11:41.931+0300	INFO	server/server.go:60	Успешная инициализация брокера Kafka
+2024-07-17T16:12:58.300+0300	INFO	server/server.go:38	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:12:58.408+0300	INFO	server/server.go:59	Успешное подключение к БД
+2024-07-17T16:12:58.408+0300	INFO	server/server.go:60	Успешная инициализация брокера Kafka
+2024-07-17T16:15:12.056+0300	INFO	server/server.go:38	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:15:12.162+0300	INFO	server/server.go:59	Успешное подключение к БД
+2024-07-17T16:15:12.163+0300	INFO	server/server.go:60	Успешная инициализация брокера Kafka
+2024-07-17T16:15:29.165+0300	INFO	server/server.go:38	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:15:29.258+0300	INFO	server/server.go:59	Успешное подключение к БД
+2024-07-17T16:15:29.259+0300	INFO	server/server.go:60	Успешная инициализация брокера Kafka
+2024-07-17T16:16:15.681+0300	INFO	server/server.go:38	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:16:15.789+0300	INFO	server/server.go:59	Успешное подключение к БД
+2024-07-17T16:16:15.789+0300	INFO	server/server.go:60	Успешная инициализация брокера Kafka
+2024-07-17T16:16:31.991+0300	INFO	server/server.go:38	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:16:32.085+0300	INFO	server/server.go:59	Успешное подключение к БД
+2024-07-17T16:16:32.086+0300	INFO	server/server.go:60	Успешная инициализация брокера Kafka
+2024-07-17T16:18:26.545+0300	INFO	server/server.go:38	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:18:26.638+0300	INFO	server/server.go:59	Успешное подключение к БД
+2024-07-17T16:18:26.638+0300	INFO	server/server.go:60	Успешная инициализация брокера Kafka
+2024-07-17T16:44:48.262+0300	INFO	server/server.go:39	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:44:48.337+0300	INFO	server/server.go:60	Успешное подключение к БД
+2024-07-17T16:44:48.337+0300	INFO	server/server.go:61	Успешная инициализация брокера Kafka
+2024-07-17T16:45:33.542+0300	DEBUG	handlers/handlers.go:117	strconv.Atoi: parsing "": invalid syntax
+2024-07-17T16:45:33.542+0300	INFO	logger/logger.go:82	uri /stats method GET status 422 duration 759.2µs size 0
+2024-07-17T16:48:04.828+0300	INFO	server/server.go:113	Принят сигнал завершения, закрытие сервера...
+2024-07-17T16:48:07.402+0300	INFO	server/server.go:39	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:48:07.479+0300	INFO	server/server.go:60	Успешное подключение к БД
+2024-07-17T16:48:07.479+0300	INFO	server/server.go:61	Успешная инициализация брокера Kafka
+2024-07-17T16:48:12.846+0300	INFO	logger/logger.go:82	uri /stats method GET status 200 duration 56.9481ms size 37
+2024-07-17T16:48:18.754+0300	INFO	logger/logger.go:82	uri /stats method POST status 405 duration 0s size 0
+2024-07-17T16:49:44.780+0300	INFO	logger/logger.go:82	uri /message method POST status 200 duration 59.7681ms size 0
+2024-07-17T16:49:53.376+0300	INFO	logger/logger.go:82	uri /stats method GET status 200 duration 2.0122ms size 37
+2024-07-17T16:50:11.830+0300	INFO	server/server.go:113	Принят сигнал завершения, закрытие сервера...
+2024-07-17T16:50:27.204+0300	INFO	server/server.go:39	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T16:50:27.296+0300	INFO	server/server.go:60	Успешное подключение к БД
+2024-07-17T16:50:27.297+0300	INFO	server/server.go:61	Успешная инициализация брокера Kafka
+2024-07-17T16:50:33.157+0300	INFO	logger/logger.go:82	uri /stats method GET status 200 duration 12.9044ms size 37
+2024-07-17T16:50:35.140+0300	INFO	logger/logger.go:82	uri /message method POST status 200 duration 11.7039ms size 0
+2024-07-17T16:50:37.760+0300	INFO	logger/logger.go:82	uri /message method POST status 200 duration 22.3884ms size 0
+2024-07-17T16:50:38.656+0300	INFO	logger/logger.go:82	uri /message method POST status 200 duration 40.5649ms size 0
+2024-07-17T16:50:40.773+0300	INFO	logger/logger.go:82	uri /stats method GET status 200 duration 1.863ms size 37
+2024-07-17T16:53:28.649+0300	INFO	server/server.go:113	Принят сигнал завершения, закрытие сервера...
+2024-07-17T16:53:28.649+0300	INFO	server/server.go:101	Остановка обработки сообщений из канала
+2024-07-17T17:10:39.026+0300	INFO	server/server.go:39	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T17:11:02.541+0300	INFO	server/server.go:39	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T17:11:02.817+0300	INFO	server/server.go:60	Успешное подключение к БД
+2024-07-17T17:11:02.817+0300	INFO	server/server.go:61	Успешная инициализация брокера Kafka
+2024-07-17T17:11:39.854+0300	INFO	logger/logger.go:82	uri /message method POST status 200 duration 116.6607ms size 0
+2024-07-17T17:11:43.501+0300	INFO	logger/logger.go:82	uri /message method POST status 200 duration 8.5573ms size 0
+2024-07-17T17:11:48.844+0300	INFO	logger/logger.go:82	uri /message method POST status 200 duration 7.8783ms size 0
+2024-07-17T17:11:52.449+0300	INFO	logger/logger.go:82	uri /stats method GET status 200 duration 9.1543ms size 37
+2024-07-17T17:13:16.566+0300	INFO	server/server.go:113	Принят сигнал завершения, закрытие сервера...
+2024-07-17T17:13:26.773+0300	INFO	server/server.go:39	Старт сервера	{"addr": "localhost:8080"}
+2024-07-17T17:13:27.002+0300	INFO	server/server.go:60	Успешное подключение к БД
+2024-07-17T17:13:27.003+0300	INFO	server/server.go:61	Успешная инициализация брокера Kafka
+2024-07-17T17:13:29.271+0300	INFO	logger/logger.go:82	uri /stats method GET status 200 duration 13.9645ms size 37
+2024-07-17T17:13:54.076+0300	INFO	logger/logger.go:82	uri /stats method GET status 200 duration 2.2714ms size 37
+2024-07-17T17:14:03.303+0300	INFO	server/server.go:113	Принят сигнал завершения, закрытие сервера...
