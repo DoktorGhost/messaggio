@@ -17,23 +17,62 @@ type MyMessage struct {
 }
 
 func main() {
-	producer, err := sarama.NewSyncProducer([]string{"localhost:9092"}, nil)
-	if err != nil {
-		log.Fatalf("Failed to create producer: %v", err)
+
+	var producer sarama.SyncProducer
+	var consumer sarama.Consumer
+	var partitionConsumer sarama.PartitionConsumer
+	var err error
+
+	for i := 0; i < 5; i++ {
+		producer, err = sarama.NewSyncProducer([]string{"kafka:9092"}, nil)
+		if err != nil {
+			if i < 4 {
+				log.Printf("Ошибка создания producer: %v", err)
+				log.Printf("Повторная попытка создания producer")
+				time.Sleep(5 * time.Second)
+				continue
+			} else {
+				log.Fatal("Ошибка создания producer: %v", err)
+			}
+		} else {
+			break
+		}
 	}
 	defer producer.Close()
 
 	// Создание консьюмера Kafka
-	consumer, err := sarama.NewConsumer([]string{"localhost:9092"}, nil)
-	if err != nil {
-		log.Fatalf("Failed to create consumer: %v", err)
+	for i := 0; i < 5; i++ {
+		consumer, err = sarama.NewConsumer([]string{"kafka:9092"}, nil)
+		if err != nil {
+			if i < 4 {
+				log.Printf("Ошибка создания consumer: %v", err)
+				log.Printf("Повторная попытка создания consumer")
+				time.Sleep(5 * time.Second)
+				continue
+			} else {
+				log.Fatal("Ошибка создания consumer: %v", err)
+			}
+		} else {
+			break
+		}
 	}
 	defer consumer.Close()
 
 	// Подписка на партицию "messages" в Kafka
-	partitionConsumer, err := consumer.ConsumePartition("messages", 0, sarama.OffsetOldest)
-	if err != nil {
-		log.Fatalf("Failed to consume partition: %v", err)
+	for i := 0; i < 5; i++ {
+		partitionConsumer, err = consumer.ConsumePartition("messages", 0, sarama.OffsetOldest)
+		if err != nil {
+			if i < 4 {
+				log.Printf("Ошибка partition: %v", err)
+				log.Printf("Повторная попытка создания partition")
+				time.Sleep(5 * time.Second)
+				continue
+			} else {
+				log.Fatal("Ошибка partition: %v", err)
+			}
+		} else {
+			break
+		}
 	}
 	defer partitionConsumer.Close()
 
@@ -45,7 +84,7 @@ func main() {
 		select {
 		case msg, ok := <-partitionConsumer.Messages():
 			if !ok {
-				log.Println("Channel closed, exiting")
+				log.Println("Канал закрыт")
 				wg.Wait() // Ждем завершения всех горутин
 				return
 			}
@@ -57,7 +96,7 @@ func main() {
 				var message MyMessage
 				err := json.Unmarshal(msg.Value, &message)
 				if err != nil {
-					log.Printf("Error unmarshaling JSON: %v\n", err)
+					log.Printf("Ошибка JSON: %v\n", err)
 					return
 				}
 
@@ -74,9 +113,9 @@ func main() {
 
 				_, _, err = producer.SendMessage(resp)
 				if err != nil {
-					log.Printf("Failed to send message to Kafka: %v", err)
+					log.Printf("Ошибка отправки сообщения в Kafka: %v", err)
 				}
-				log.Printf("Received message: %+v\n", message)
+				log.Printf("Сообщение обработано: %+v\n", message)
 			}(msg)
 		}
 	}

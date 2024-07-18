@@ -11,15 +11,51 @@ services:
     image: confluentinc/cp-kafka:latest
     depends_on:
       - zookeeper
-    ports:
-      - "9092:9092"  # Пробрасываем порт Kafka
     environment:
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+    networks:
+      - kafka-network
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: admin
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    networks:
+      - kafka-network
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  main-app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - kafka
+      - postgres
+    networks:
+      - kafka-network
+    ports:
+      - "8080:8080"
+
+  client-app:
+    build:
+      context: .
+      dockerfile: CMD/client/Dockerfile
+    depends_on:
+      - kafka
+      - postgres
+      - main-app
     networks:
       - kafka-network
 
 networks:
   kafka-network:
     driver: bridge
+
+volumes:
+  pgdata:

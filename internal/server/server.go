@@ -14,13 +14,14 @@ import (
 	"os/signal"
 	"strconv"
 	"syscall"
+	"time"
 )
 
 func StartServer() error {
 	messageIDChannel := make(chan string)
 	// Инициализация логгера
 	if err := logger.InitLogger("logs/log.txt"); err != nil {
-		panic("cannot initialize zap")
+		panic("Не удалось инициализировать zap")
 	}
 	defer logger.SugaredLogger().Sync()
 
@@ -41,18 +42,41 @@ func StartServer() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	var db *psg.PostgresStorage
+	var br *kafka.KafkaBroker
+
 	//подключение к БД
-	db, err := psg.NewPostgresStorage(conf)
-	if err != nil {
-		logger.SugaredLogger().Fatalw("Ошибка при подключении к БД", "error", err)
-		return err
+	for i := 0; i < 5; i++ {
+		db, err = psg.NewPostgresStorage(conf)
+		if err != nil {
+			if i < 4 {
+				logger.SugaredLogger().Info("Ошибка при подключении к БД ", "error", err)
+				logger.SugaredLogger().Info("Повторная попытка подключения к БД через 5 секунд...")
+				time.Sleep(5 * time.Second)
+				continue
+			} else {
+				logger.SugaredLogger().Fatal("Ошибка при подключении к БД ", "error", err)
+				return err
+			}
+		}
+		break
 	}
 	defer db.Close()
 
-	br, err := kafka.NewKafkaBroker(conf)
-	if err != nil {
-		logger.SugaredLogger().Fatalw("Ошибка при инициализации брокера Kafka", "error", err)
-		return err
+	for i := 0; i < 5; i++ {
+		br, err = kafka.NewKafkaBroker(conf)
+		if err != nil {
+			if i < 4 {
+				logger.SugaredLogger().Info("Ошибка при инициализации брокера Kafka ", "error", err)
+				logger.SugaredLogger().Info("Повторная попытка подключения к БД через 5 секунд...")
+				time.Sleep(5 * time.Second)
+				continue
+			} else {
+				logger.SugaredLogger().Fatal("Ошибка при инициализации брокера Kafka ", "error", err)
+				return err
+			}
+
+		}
 	}
 	defer br.Close()
 
@@ -68,6 +92,7 @@ func StartServer() error {
 		if err != nil {
 			logger.SugaredLogger().Errorw("Ошибка при запуске HTTP-сервера", "error", err)
 		}
+
 	}()
 
 	// Запуск получения сообщений из Kafka

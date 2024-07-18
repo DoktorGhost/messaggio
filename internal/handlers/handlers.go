@@ -58,7 +58,7 @@ func HandlerCreateMessage(w http.ResponseWriter, r *http.Request, useCase usecas
 	defer r.Body.Close()
 
 	if request.Content == "" {
-		logger.SugaredLogger().Info("Content is required")
+		logger.SugaredLogger().Info("Пустое содержимое запроса")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
