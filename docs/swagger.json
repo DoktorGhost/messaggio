@@ -1,0 +1,101 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Messaggio",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "paths": {
+        "/message": {
+            "post": {
+                "description": "Читает собщение из тела запроса, записывает в БД и отправляетв Кафку",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Message"
+                ],
+                "summary": "Добавление сообщения",
+                "parameters": [
+                    {
+                        "description": "Текст сообщения",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Request"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "405": {
+                        "description": "Method Not Allowed"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/stats": {
+            "get": {
+                "description": "Выводит количество всех сообщений, количество обработанных и не обработанных сообщений.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stats"
+                ],
+                "summary": "Статистика обработанных сообщений",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Stats"
+                        }
+                    },
+                    "405": {
+                        "description": "Method Not Allowed"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Request": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Stats": {
+            "type": "object",
+            "properties": {
+                "pending": {
+                    "type": "integer"
+                },
+                "processed": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

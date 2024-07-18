@@ -1,0 +1,61 @@
+version: '3.6'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      - ZOOKEEPER_CLIENT_PORT=2181
+    networks:
+      - kafka-network
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+    networks:
+      - kafka-network
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: admin
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    networks:
+      - kafka-network
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  main-app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - kafka
+      - postgres
+    networks:
+      - kafka-network
+    ports:
+      - "8080:8080"
+
+  client-app:
+    build:
+      context: .
+      dockerfile: CMD/client/Dockerfile
+    depends_on:
+      - kafka
+      - postgres
+      - main-app
+    networks:
+      - kafka-network
+
+networks:
+  kafka-network:
+    driver: bridge
+
+volumes:
+  pgdata:
