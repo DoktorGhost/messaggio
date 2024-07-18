@@ -1,0 +1,67 @@
+definitions:
+  models.Request:
+    properties:
+      content:
+        type: string
+    type: object
+  models.Stats:
+    properties:
+      pending:
+        type: integer
+      processed:
+        type: integer
+      total:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  title: Messaggio
+  version: "1.0"
+paths:
+  /message:
+    post:
+      consumes:
+      - application/json
+      description: Читает собщение из тела запроса, записывает в БД и отправляетв
+        Кафку
+      parameters:
+      - description: Текст сообщения
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/models.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "405":
+          description: Method Not Allowed
+        "500":
+          description: Internal Server Error
+      summary: Добавление сообщения
+      tags:
+      - Message
+  /stats:
+    get:
+      description: Выводит количество всех сообщений, количество обработанных и не
+        обработанных сообщений.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Stats'
+        "405":
+          description: Method Not Allowed
+        "500":
+          description: Internal Server Error
+      summary: Статистика обработанных сообщений
+      tags:
+      - Stats
+swagger: "2.0"

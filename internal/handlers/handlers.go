@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
+	httpSwagger "github.com/swaggo/http-swagger/v2"
+	_ "messaggio/docs"
 	"messaggio/internal/config"
 	"messaggio/internal/logger"
 	"messaggio/internal/models"
@@ -15,6 +17,11 @@ func InitRoutes(useCase usecase.UseCaseStorage, ctx context.Context, conf *confi
 	r := chi.NewRouter()
 
 	r.Use(logger.WithLogging)
+
+	r.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("http://"+conf.SERVER_HOST+":"+conf.SERVER_PORT+"/swagger/doc.json"), //The url pointing to API definition
+	))
+
 	r.Post("/message", func(w http.ResponseWriter, r *http.Request) {
 		HandlerCreateMessage(w, r, useCase, ctx)
 	})
@@ -22,36 +29,26 @@ func InitRoutes(useCase usecase.UseCaseStorage, ctx context.Context, conf *confi
 		HandlerGetStats(w, r, useCase, ctx)
 	})
 
-	/*
-		r.Get("/swagger/*", httpSwagger.Handler(
-			httpSwagger.URL("http://"+conf.SERVER_HOST+":"+conf.SERVER_PORT+"/swagger/doc.json"), //The url pointing to API definition
-		))
-
-	*/
 	return r
 }
 
-// @Summary Добавление нового пользователя
-// @Description Добавляет нового пользователя на основе серии и номера паспорта, обогащает информацию через внешний API (если в .env не указан URL API - получим ответ 500)
-// @Tags Users
+// @Summary Добавление сообщения
+// @Description Читает собщение из тела запроса, записывает в БД и отправляетв Кафку
+// @Tags Message
 // @Accept json
 // @Produce json
-// @Param body body models.PassportRequest true "Серия и номер пасспорта в формате `1234 123456` (4 цифры, пробел, 6 цифр)"
-// @Success 200 {string} string "UserID"
-// @Failure 400 {string} string "Ошибка декодирования тела запроса"
-// @Failure 409 {string} string "Ошибка записи: Пользователь с таким номером паспорта уже существует"
-// @Failure 422 {string} string "Ошибка валидации серии паспорта или номера паспорта"
-// @Failure 500 {string} string "Ошибка сервера"
-// @Failure 503 {string} string "Ошибка запроса к стороннему API"
-// @Router /user [post]
+// @Param body body models.Request true "Текст сообщения"
+// @Success 200
+// @Failure 400
+// @Failure 405
+// @Failure 500
+// @Router /message [post]
 func HandlerCreateMessage(w http.ResponseWriter, r *http.Request, useCase usecase.UseCaseStorage, ctx context.Context) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
-	var request struct {
-		Content string `json:"content"`
-	}
+	var request models.Request
 
 	if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 		logger.SugaredLogger().Debug(err)
@@ -91,17 +88,14 @@ func HandlerCreateMessage(w http.ResponseWriter, r *http.Request, useCase usecas
 	w.WriteHeader(http.StatusOK)
 }
 
-// @Summary Получение информации о пользователе
-// @Description Получает информацию о пользователе по его уникальному идентификатору.
-// @Tags Users
-// @Accept json
+// @Summary Статистика обработанных сообщений
+// @Description Выводит количество всех сообщений, количество обработанных и не обработанных сообщений.
+// @Tags Stats
 // @Produce json
-// @Param userID path int true "User ID"
-// @Success 200 {object} models.UserData "Успешный ответ с данными пользователя"
-// @Failure 404 {string} string "Пользователь не найден"
-// @Failure 422 {string} string "Ошибка конвертирования ID"
-// @Failure 500 {string} string "Ошибка сервера"
-// @Router /user/{userID} [get]
+// @Success 200 {object} models.Stats
+// @Failure 405
+// @Failure 500
+// @Router /stats [get]
 func HandlerGetStats(w http.ResponseWriter, r *http.Request, useCase usecase.UseCaseStorage, ctx context.Context) {
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)

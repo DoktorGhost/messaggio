@@ -11,3 +11,7 @@ type Stats struct {
 	Processed int `json:"processed"`
 	Pending   int `json:"pending"`
 }
+
+type Request struct {
+	Content string `json:"content"`
+}

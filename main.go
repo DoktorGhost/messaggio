@@ -1,8 +1,10 @@
 package main
 
-import "messaggio/internal/server"
+import (
+	"messaggio/internal/server"
+)
 
-//	@title			Тайм-Трекер API
+//	@title			Messaggio
 //	@version		1.0
 
 // @host		localhost:8080
