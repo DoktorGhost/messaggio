@@ -13,7 +13,7 @@ definitions:
       total:
         type: integer
     type: object
-host: 62.109.17.207:8080
+host: localhost:8080
 info:
   contact: {}
   title: Messaggio
