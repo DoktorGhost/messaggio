@@ -44,15 +44,16 @@ func StartServer() error {
 
 	var db *psg.PostgresStorage
 	var br *kafka.KafkaBroker
+	initialDelay := 5 * time.Second
 
 	//подключение к БД
-	for i := 0; i < 5; i++ {
+	for i := 1; i < 6; i++ {
 		db, err = psg.NewPostgresStorage(conf)
 		if err != nil {
-			if i < 4 {
-				logger.SugaredLogger().Info("Ошибка при подключении к БД ", "error", err)
-				logger.SugaredLogger().Info("Повторная попытка подключения к БД через 5 секунд...")
-				time.Sleep(5 * time.Second)
+			if i < 5 {
+				logger.SugaredLogger().Infof("Ошибка при подключении к БД (попытка №%d): %v", i, err)
+				logger.SugaredLogger().Info("Повторная попытка подключения к БД")
+				time.Sleep(initialDelay * time.Duration(i))
 				continue
 			} else {
 				logger.SugaredLogger().Fatal("Ошибка при подключении к БД ", "error", err)
@@ -63,13 +64,13 @@ func StartServer() error {
 	}
 	defer db.Close()
 
-	for i := 0; i < 5; i++ {
+	for i := 1; i < 6; i++ {
 		br, err = kafka.NewKafkaBroker(conf)
 		if err != nil {
-			if i < 4 {
-				logger.SugaredLogger().Info("Ошибка при инициализации брокера Kafka ", "error", err)
-				logger.SugaredLogger().Info("Повторная попытка подключения к БД через 5 секунд...")
-				time.Sleep(5 * time.Second)
+			if i < 5 {
+				logger.SugaredLogger().Infof("Ошибка при инициализации брокера Kafka (попытка №%d): %v", i, err)
+				logger.SugaredLogger().Info("Повторная попытка инициализации брокера Kafka")
+				time.Sleep(initialDelay * time.Duration(i))
 				continue
 			} else {
 				logger.SugaredLogger().Fatal("Ошибка при инициализации брокера Kafka ", "error", err)
