@@ -5,7 +5,7 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "localhost:8080",
+    "host": "62.109.17.207:8080",
     "paths": {
         "/message": {
             "post": {
