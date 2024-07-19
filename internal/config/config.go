@@ -3,13 +3,15 @@ package config
 import "github.com/caarlos0/env/v6"
 
 type Config struct {
-	DB_HOST     string `env:"DB_HOST"`
-	DB_PORT     string `env:"DB_PORT"`
-	DB_NAME     string `env:"DB_NAME"`
-	DB_LOGIN    string `env:"DB_LOGIN"`
-	DB_PASS     string `env:"DB_PASS"`
-	SERVER_PORT string `env:"SERVER_PORT"`
-	SERVER_HOST string `env:"SERVER_HOST"`
+	DB_HOST      string `env:"DB_HOST"`
+	DB_PORT      string `env:"DB_PORT"`
+	DB_NAME      string `env:"DB_NAME"`
+	DB_LOGIN     string `env:"DB_LOGIN"`
+	DB_PASS      string `env:"DB_PASS"`
+	SERVER_PORT  string `env:"SERVER_PORT"`
+	SERVER_HOST  string `env:"SERVER_HOST"`
+	SWAGGER_HOST string `env:"SWAGGER_HOST"`
+	SWAGGER_PORT string `env:"SWAGGER_PORT"`
 }
 
 func ParseConfigServer() (*Config, error) {

@@ -22,55 +22,59 @@ func main() {
 	var consumer sarama.Consumer
 	var partitionConsumer sarama.PartitionConsumer
 	var err error
+	initialDelay := 5 * time.Second
 
-	for i := 0; i < 5; i++ {
+	for i := 1; i < 6; i++ {
 		producer, err = sarama.NewSyncProducer([]string{"kafka:9092"}, nil)
 		if err != nil {
-			if i < 4 {
-				log.Printf("Ошибка создания producer: %v", err)
+			if i < 5 {
+				log.Printf("Создание producer. Попытка №%d не удалось: %v", i, err)
 				log.Printf("Повторная попытка создания producer")
-				time.Sleep(5 * time.Second)
+				time.Sleep(initialDelay * time.Duration(i))
 				continue
 			} else {
 				log.Fatal("Ошибка создания producer: %v", err)
 			}
 		} else {
+			log.Printf("producer успешно создан")
 			break
 		}
 	}
 	defer producer.Close()
 
 	// Создание консьюмера Kafka
-	for i := 0; i < 5; i++ {
+	for i := 1; i < 6; i++ {
 		consumer, err = sarama.NewConsumer([]string{"kafka:9092"}, nil)
 		if err != nil {
-			if i < 4 {
-				log.Printf("Ошибка создания consumer: %v", err)
+			if i < 5 {
+				log.Printf("Создание consumer. Попытка №%d не удалось: %v", i, err)
 				log.Printf("Повторная попытка создания consumer")
-				time.Sleep(5 * time.Second)
+				time.Sleep(initialDelay * time.Duration(i))
 				continue
 			} else {
 				log.Fatal("Ошибка создания consumer: %v", err)
 			}
 		} else {
+			log.Printf("consumer успешно создан")
 			break
 		}
 	}
 	defer consumer.Close()
 
 	// Подписка на партицию "messages" в Kafka
-	for i := 0; i < 5; i++ {
+	for i := 1; i < 6; i++ {
 		partitionConsumer, err = consumer.ConsumePartition("messages", 0, sarama.OffsetOldest)
 		if err != nil {
-			if i < 4 {
-				log.Printf("Ошибка partition: %v", err)
+			if i < 5 {
+				log.Printf("Подписка partition. Попытка №%d не удалось: %v", i, err)
 				log.Printf("Повторная попытка создания partition")
-				time.Sleep(5 * time.Second)
+				time.Sleep(initialDelay * time.Duration(i))
 				continue
 			} else {
 				log.Fatal("Ошибка partition: %v", err)
 			}
 		} else {
+			log.Printf("Подписка на partition успешно выполнена")
 			break
 		}
 	}

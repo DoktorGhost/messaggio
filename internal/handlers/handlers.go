@@ -19,7 +19,7 @@ func InitRoutes(useCase usecase.UseCaseStorage, ctx context.Context, conf *confi
 	r.Use(logger.WithLogging)
 
 	r.Get("/swagger/*", httpSwagger.Handler(
-		httpSwagger.URL("http://localhost"+":"+conf.SERVER_PORT+"/swagger/doc.json"), //The url pointing to API definition
+		httpSwagger.URL("http://"+conf.SWAGGER_HOST+":"+conf.SWAGGER_PORT+"/swagger/doc.json"),
 	))
 
 	r.Post("/message", func(w http.ResponseWriter, r *http.Request) {
